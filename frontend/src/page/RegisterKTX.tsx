@@ -3,7 +3,7 @@ import React from 'react'
 const RegisterKTX = () => {
   return (
     <div>
-              <main className='container mt-4 ' style={{maxWidth:"900px"}}>
+        <main className='container mt-4 ' style={{maxWidth:"900px"}}>
         <div className='card shadow p-4 rounded-5 border-0'>
           <h1 className='text-center text-primary fw-bold mb-4'>ĐĂNG KÝ Ở KÝ TÚC XÁ</h1>
         
