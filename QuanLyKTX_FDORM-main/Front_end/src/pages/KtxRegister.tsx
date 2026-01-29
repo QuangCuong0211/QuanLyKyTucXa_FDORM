@@ -1,3 +1,5 @@
+import React from 'react'
+
 // Trang dang ky o ky tuc xa - form nhap thong tin sinh vien
 const KtxRegister = () => {
   return (
