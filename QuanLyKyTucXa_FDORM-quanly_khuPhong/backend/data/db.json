@@ -1,0 +1,79 @@
+{
+  "users": [
+    {
+      "id": "80acdc8d-b397-44ed-ad9a-4b6f328dc121",
+      "email": "admin@ktx.vn",
+      "password": "$2a$10$qeG/nDb.u8Ys3e4F5Mk.fe3btmFVAv1GkXN.sSF1jx9iKpKeJXhPu",
+      "fullName": "Quản trị viên",
+      "role": "admin",
+      "createdAt": "2026-01-29T17:00:10.139Z"
+    },
+    {
+      "id": "ee44a8e8-94e7-40dd-8d16-d923e86b9df4",
+      "email": "nnnn041105@gmail.com",
+      "password": "$2a$10$eiRbHjOkzlVeZjGr/CPO7uiQUMkPadNdvEJUPa.bgaHpwz8nR1S3u",
+      "fullName": "NGỌC NAM",
+      "role": "student",
+      "createdAt": "2026-01-29T17:03:54.287Z"
+    }
+  ],
+  "areas": [
+    {
+      "id": "area-1",
+      "name": "Khu A",
+      "description": "Khu A - Tòa nhà 1",
+      "createdAt": "2025-01-01T00:00:00.000Z"
+    },
+    {
+      "id": "area-2",
+      "name": "Khu B",
+      "description": "Khu B - Tòa nhà 2",
+      "createdAt": "2025-01-01T00:00:00.000Z"
+    },
+    {
+      "id": "area-3",
+      "name": "Khu C",
+      "description": "Khu C - Tòa nhà 3",
+      "createdAt": "2025-01-01T00:00:00.000Z"
+    }
+  ],
+  "rooms": [
+    {
+      "id": "room-1",
+      "areaId": "area-1",
+      "name": "A101",
+      "capacity": 6,
+      "currentOccupancy": 0,
+      "status": "available",
+      "createdAt": "2025-01-01T00:00:00.000Z"
+    },
+    {
+      "id": "room-2",
+      "areaId": "area-1",
+      "name": "A102",
+      "capacity": 6,
+      "currentOccupancy": 2,
+      "status": "available",
+      "createdAt": "2025-01-01T00:00:00.000Z"
+    },
+    {
+      "id": "room-3",
+      "areaId": "area-1",
+      "name": "A201",
+      "capacity": 8,
+      "currentOccupancy": 0,
+      "status": "available",
+      "createdAt": "2025-01-01T00:00:00.000Z"
+    },
+    {
+      "id": "room-4",
+      "areaId": "area-2",
+      "name": "B101",
+      "capacity": 6,
+      "currentOccupancy": 0,
+      "status": "available",
+      "createdAt": "2025-01-01T00:00:00.000Z"
+    }
+  ],
+  "registrations": []
+}

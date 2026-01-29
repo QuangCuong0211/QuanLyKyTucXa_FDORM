@@ -1,0 +1,218 @@
+/* Hệ thống quản lý KTX - Giao diện chuyên nghiệp */
+:root {
+  --ktx-primary: #0d5c63;
+  --ktx-primary-dark: #08464b;
+  --ktx-primary-light: #168a92;
+  --ktx-accent: #2a9d8f;
+  --ktx-nav-bg: #0d5c63;
+  --ktx-text: #2d3748;
+  --ktx-text-muted: #718096;
+  --ktx-border: #e2e8f0;
+  --ktx-bg: #f7fafc;
+  --ktx-card-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+  --ktx-font: "Segoe UI", "Source Sans Pro", system-ui, -apple-system, sans-serif;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: var(--ktx-font);
+  font-size: 15px;
+  color: var(--ktx-text);
+  background-color: var(--ktx-bg);
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+}
+
+a {
+  color: var(--ktx-primary);
+  text-decoration: none;
+}
+
+a:hover {
+  color: var(--ktx-primary-dark);
+  text-decoration: underline;
+}
+
+.ktx-header {
+  background: var(--ktx-nav-bg);
+  color: #fff;
+  box-shadow: var(--ktx-card-shadow);
+}
+
+.ktx-header .navbar-brand {
+  font-weight: 600;
+  font-size: 1.2rem;
+  color: #fff !important;
+}
+
+.ktx-header .nav-link {
+  color: rgba(255, 255, 255, 0.9) !important;
+  font-weight: 500;
+  padding: 0.5rem 1rem !important;
+}
+
+.ktx-header .nav-link:hover,
+.ktx-header .nav-link.active {
+  color: #fff !important;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 6px;
+}
+
+.ktx-header .btn-outline-light {
+  border-color: rgba(255, 255, 255, 0.6);
+  color: #fff;
+}
+
+.ktx-header .btn-outline-light:hover {
+  background: rgba(255, 255, 255, 0.15);
+  border-color: #fff;
+  color: #fff;
+}
+
+.auth-page {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+  background: linear-gradient(160deg, #f0f9fa 0%, #e8f4f5 50%, #f7fafc 100%);
+}
+
+.auth-card {
+  width: 100%;
+  max-width: 420px;
+  background: #fff;
+  border-radius: 10px;
+  box-shadow: 0 4px 20px rgba(13, 92, 99, 0.12);
+  padding: 2.25rem;
+  border: 1px solid var(--ktx-border);
+}
+
+.auth-header {
+  text-align: center;
+  margin-bottom: 1.75rem;
+}
+
+.auth-title {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: var(--ktx-primary-dark);
+  margin: 0 0 0.25rem 0;
+}
+
+.auth-subtitle {
+  font-size: 0.9rem;
+  color: var(--ktx-text-muted);
+  margin: 0;
+}
+
+.auth-form .form-label {
+  font-weight: 500;
+  color: var(--ktx-text);
+  margin-bottom: 0.35rem;
+}
+
+.auth-form .form-control {
+  border-radius: 6px;
+  border-color: var(--ktx-border);
+}
+
+.auth-form .form-control:focus {
+  border-color: var(--ktx-primary-light);
+  box-shadow: 0 0 0 3px rgba(13, 92, 99, 0.15);
+}
+
+.auth-footer {
+  text-align: center;
+  font-size: 0.9rem;
+  color: var(--ktx-text-muted);
+}
+
+.auth-footer a {
+  font-weight: 500;
+}
+
+.btn-primary {
+  background-color: var(--ktx-primary);
+  border-color: var(--ktx-primary);
+  border-radius: 6px;
+  font-weight: 500;
+}
+
+.btn-primary:hover {
+  background-color: var(--ktx-primary-dark);
+  border-color: var(--ktx-primary-dark);
+}
+
+.ktx-main {
+  padding: 2rem 0;
+  min-height: calc(100vh - 56px);
+}
+
+.ktx-card {
+  background: #fff;
+  border-radius: 8px;
+  box-shadow: var(--ktx-card-shadow);
+  border: 1px solid var(--ktx-border);
+  overflow: hidden;
+}
+
+.ktx-section-title {
+  font-size: 1.15rem;
+  font-weight: 600;
+  color: var(--ktx-primary-dark);
+  margin-bottom: 1rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 2px solid var(--ktx-accent);
+}
+
+.ktx-hero {
+  background: var(--ktx-primary);
+  color: #fff;
+  border-radius: 10px;
+  padding: 2.5rem;
+  margin-bottom: 2rem;
+}
+
+.ktx-hero h2 {
+  font-size: 1.6rem;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+}
+
+.ktx-hero p {
+  opacity: 0.9;
+  margin: 0;
+  font-size: 1rem;
+}
+
+.ktx-feature-card {
+  background: #fff;
+  border-radius: 8px;
+  padding: 1.5rem;
+  height: 100%;
+  border: 1px solid var(--ktx-border);
+  transition: box-shadow 0.2s, border-color 0.2s;
+}
+
+.ktx-feature-card:hover {
+  border-color: var(--ktx-primary-light);
+  box-shadow: 0 4px 12px rgba(13, 92, 99, 0.1);
+}
+
+.ktx-feature-card h3 {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: var(--ktx-primary-dark);
+  margin-bottom: 0.5rem;
+}
+
+.ktx-feature-card p {
+  font-size: 0.9rem;
+  color: var(--ktx-text-muted);
+  margin: 0;
+}

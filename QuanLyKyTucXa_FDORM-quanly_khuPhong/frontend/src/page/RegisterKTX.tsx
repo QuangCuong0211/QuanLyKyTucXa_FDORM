@@ -1,18 +1,31 @@
-import axios from 'axios';
-import React, { useState } from 'react'
+import React, { useEffect, useState } from "react";
+import { api } from "../api/client";
+
+const defaultAvatar =
+  "https://upload.wikimedia.org/wikipedia/commons/thumb/5/59/User-avatar.svg/3840px-User-avatar.svg.png";
 
 const RegisterKTX = () => {
-  const defaultAvata = "https://upload.wikimedia.org/wikipedia/commons/thumb/5/59/User-avatar.svg/3840px-User-avatar.svg.png"
-  const [preview, setPreview] = useState(defaultAvata)
+  const [preview, setPreview] = useState(defaultAvatar);
   const [imageFile, setImageFile] = useState<File | null>(null);
-  const handleImageChange = (e: any)=>{
-    const file = e.target.files[0]
-    if(file){
+  const [areas, setAreas] = useState<{ id: string; name: string }[]>([]);
+  const [areasLoading, setAreasLoading] = useState(true);
+
+  useEffect(() => {
+    api.areas
+      .list()
+      .then(setAreas)
+      .catch(() => setAreas([]))
+      .finally(() => setAreasLoading(false));
+  }, []);
+
+  const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (file) {
       setImageFile(file);
-      setPreview(URL.createObjectURL(file))
+      setPreview(URL.createObjectURL(file));
     }
-  }
-  
+  };
+
   const [formData, setFormData] = useState({
     fullName: "",
     birthDate: "",
@@ -24,146 +37,129 @@ const RegisterKTX = () => {
     school: "",
     major: "",
     studentId: "",
-    area: "",
+    areaId: "",
     roomType: "",
     services: [] as string[],
     emergencyName: "",
     emergencyPhone: "",
     agree: false,
-  })
-  const [errors, setErrors] = useState<any>({});
+  });
+  const [errors, setErrors] = useState<Record<string, string>>({});
+  const [submitLoading, setSubmitLoading] = useState(false);
+  const [submitError, setSubmitError] = useState("");
+
   const validateForm = () => {
-  const newErrors: any = {};
-
-  if (!formData.fullName.trim()) {
-    newErrors.fullName = "Vui lòng nhập họ tên";
-  }
-
-  if (!formData.birthDate) {
-    newErrors.birthDate = "Vui lòng chọn ngày sinh";
-  }
-
-  if (!formData.gender) {
-    newErrors.gender = "Vui lòng chọn giới tính";
-  }
-
-  if (!formData.cccd.trim()) {
-    newErrors.cccd = "Vui lòng nhập CCCD";
-  } else if (!/^\d{12}$/.test(formData.cccd)) {
-    newErrors.cccd = "CCCD phải gồm 12 số";
-  }
-
-  if (!formData.phone.trim()) {
-    newErrors.phone = "Vui lòng nhập số điện thoại";
-  } else if (!/^(0[0-9]{9})$/.test(formData.phone)) {
-    newErrors.phone = "Số điện thoại không hợp lệ";
-  }
-
-  if (formData.email && !/\S+@\S+\.\S+/.test(formData.email)) {
-    newErrors.email = "Email không hợp lệ";
-  }
-
-  if (!formData.address.trim()) {
-    newErrors.address = "Vui lòng nhập địa chỉ";
-  }
-
-  if (!formData.school.trim()) {
-    newErrors.school = "Vui lòng nhập tên trường";
-  }
-
-  if (!formData.studentId.trim()) {
-    newErrors.studentId = "Vui lòng nhập mã sinh viên";
-  }
-
-  if (!formData.area) {
-    newErrors.area = "Vui lòng chọn khu";
-  }
-
-  if (!formData.roomType) {
-    newErrors.roomType = "Vui lòng chọn loại phòng";
-  }
-
-  if (!formData.emergencyName.trim()) {
-    newErrors.emergencyName = "Vui lòng nhập người liên hệ";
-  }
-
-  if (!formData.emergencyPhone.trim()) {
-    newErrors.emergencyPhone = "Vui lòng nhập SĐT người liên hệ";
-  }
-
-  if (!imageFile) {
-    newErrors.avatar = "Vui lòng chọn ảnh thẻ";
-  }
-
-  if (!formData.major.trim()) {
-  newErrors.major = "Vui lòng nhập ngành học";
-}
-
-  if (!formData.agree) {
-  newErrors.agree = "Bạn phải đồng ý cam kết";
-}
-
-  setErrors(newErrors);
-
-  return Object.keys(newErrors).length === 0;
-};
-
-const handleChange = (e: any) => {
-  const { name, value, type, checked } = e.target;
-  if (name === "services") {
-    setFormData((prev) => ({
-      ...prev,
-      services: checked
-        ? [...prev.services, value]
-        : prev.services.filter((item) => item !== value),
-    }));
-    return;
-  }
-  if (type === "checkbox") {
-    setFormData((prev) => ({
-      ...prev,
-      [name]: checked,
-    }));
-    return;
-  }
-
-  setFormData((prev) => ({
-    ...prev,
-    [name]: value,
-  }));
-};
-
-const handleSubmit = async (e: any) => {
-  e.preventDefault();
-
-  if (!validateForm()) return;
-
-  const dataToSend = {
-    ...formData,
-    avatar: preview, 
+    const newErrors: Record<string, string> = {};
+    if (!formData.fullName.trim()) newErrors.fullName = "Vui lòng nhập họ tên";
+    if (!formData.birthDate) newErrors.birthDate = "Vui lòng chọn ngày sinh";
+    if (!formData.gender) newErrors.gender = "Vui lòng chọn giới tính";
+    if (!formData.cccd.trim()) newErrors.cccd = "Vui lòng nhập CCCD";
+    else if (!/^\d{12}$/.test(formData.cccd)) newErrors.cccd = "CCCD phải gồm 12 số";
+    if (!formData.phone.trim()) newErrors.phone = "Vui lòng nhập số điện thoại";
+    else if (!/^(0[0-9]{9})$/.test(formData.phone)) newErrors.phone = "Số điện thoại không hợp lệ";
+    if (formData.email && !/\S+@\S+\.\S+/.test(formData.email)) newErrors.email = "Email không hợp lệ";
+    if (!formData.address.trim()) newErrors.address = "Vui lòng nhập địa chỉ";
+    if (!formData.school.trim()) newErrors.school = "Vui lòng nhập tên trường";
+    if (!formData.major.trim()) newErrors.major = "Vui lòng nhập ngành học";
+    if (!formData.studentId.trim()) newErrors.studentId = "Vui lòng nhập mã sinh viên";
+    if (!formData.areaId) newErrors.areaId = "Vui lòng chọn khu";
+    if (!formData.roomType) newErrors.roomType = "Vui lòng chọn loại phòng";
+    if (!formData.emergencyName.trim()) newErrors.emergencyName = "Vui lòng nhập người liên hệ";
+    if (!formData.emergencyPhone.trim()) newErrors.emergencyPhone = "Vui lòng nhập SĐT người liên hệ";
+    if (!formData.agree) newErrors.agree = "Bạn phải đồng ý cam kết";
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
   };
 
-  try {
-    const res = await axios.post("http://localhost:3000/registrations",dataToSend);
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
+    const { name, value, type } = e.target;
+    const checked = (e.target as HTMLInputElement).checked;
+    if (name === "services") {
+      setFormData((prev) => ({
+        ...prev,
+        services: checked
+          ? [...prev.services, value]
+          : prev.services.filter((item) => item !== value),
+      }));
+      return;
+    }
+    if (type === "checkbox") {
+      setFormData((prev) => ({ ...prev, [name]: checked }));
+      return;
+    }
+    setFormData((prev) => ({ ...prev, [name]: value }));
+  };
 
-    console.log("Response:", res.data);
-    alert("Đăng ký thành công!");
-
-  } catch (error) {
-    console.error("Lỗi:", error);
-    alert("Gửi dữ liệu thất bại!");
-  }
-};
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setSubmitError("");
+    if (!validateForm()) return;
+    setSubmitLoading(true);
+    try {
+      await api.registrations.create({
+        fullName: formData.fullName,
+        birthDate: formData.birthDate,
+        gender: formData.gender,
+        cccd: formData.cccd,
+        phone: formData.phone,
+        email: formData.email || "",
+        address: formData.address,
+        school: formData.school,
+        major: formData.major,
+        studentId: formData.studentId,
+        areaId: formData.areaId,
+        roomType: formData.roomType,
+        services: formData.services,
+        emergencyName: formData.emergencyName,
+        emergencyPhone: formData.emergencyPhone,
+        avatar: undefined,
+      });
+      alert("Gửi đơn đăng ký thành công. Vui lòng chờ duyệt.");
+      setFormData({
+        fullName: "",
+        birthDate: "",
+        gender: "",
+        cccd: "",
+        phone: "",
+        email: "",
+        address: "",
+        school: "",
+        major: "",
+        studentId: "",
+        areaId: "",
+        roomType: "",
+        services: [],
+        emergencyName: "",
+        emergencyPhone: "",
+        agree: false,
+      });
+      setPreview(defaultAvatar);
+      setImageFile(null);
+      setErrors({});
+    } catch (err) {
+      setSubmitError(err instanceof Error ? err.message : "Gửi đơn thất bại");
+    } finally {
+      setSubmitLoading(false);
+    }
+  };
 
 
   return (
-    <div>
-      <main className='container mt-4 ' style={{maxWidth:"900px"}}>
-        <div className='card shadow p-4 rounded-5 border-0'>
-          <h1 className='text-center text-primary fw-bold mb-4'>ĐĂNG KÝ Ở KÝ TÚC XÁ</h1>
-        
-        <form action="" onSubmit={handleSubmit} className='row g-3'>
-          <div className='col-12'><h2 className='fw-semibold  mt-2'>I. Thông tin cá nhân</h2></div>
+    <div className="ktx-main">
+      <main className="container" style={{ maxWidth: "900px" }}>
+        <div className="ktx-card p-4">
+          <h1 className="text-center mb-4 ktx-section-title" style={{ border: "none", padding: 0 }}>
+            Đăng ký ở ký túc xá
+          </h1>
+          {submitError && (
+            <div className="alert alert-danger py-2" role="alert">
+              {submitError}
+            </div>
+          )}
+          <form onSubmit={handleSubmit} className="row g-3">
+            <div className="col-12">
+              <h2 className="ktx-section-title mt-2">I. Thông tin cá nhân</h2>
+            </div>
           <div className='row g-3'>
             <div className='col-md-3'>
               <label htmlFor="" className='form-check-label fw-medium'>Ảnh thẻ *</label>
@@ -248,17 +244,23 @@ const handleSubmit = async (e: any) => {
           <div className='col-12'>
             <h2 className='fw-semibold  mt-2'>III. Đăng ký phòng ở</h2>
           </div>
-          <div className='col-12 '>
-            <div className='d-flex flex-column flex-md-row align-items-md-center gap-2 gap-md-4'>
-              <label htmlFor="" className='fw-medium'>Khu*</label>
-              <select name="area" value={formData.area} onChange={handleChange}  className='form-select'>
-                <option value="">-- Chọn khu --</option>
-                <option value="A">Khu A</option>
-                <option value="B">Khu B</option>
-                <option value="C">Khu C</option>
-              </select>
-              {errors.area && <small className="text-danger">{errors.area}</small>}
-            </div>
+          <div className="col-12">
+            <label className="form-label fw-medium">Khu *</label>
+            <select
+              name="areaId"
+              value={formData.areaId}
+              onChange={handleChange}
+              className="form-select"
+              disabled={areasLoading}
+            >
+              <option value="">-- Chọn khu --</option>
+              {areas.map((a) => (
+                <option key={a.id} value={a.id}>
+                  {a.name}
+                </option>
+              ))}
+            </select>
+            {errors.areaId && <small className="text-danger">{errors.areaId}</small>}
           </div>
           <div className='col-12 '>
             <div className='d-flex flex-column flex-md-row align-items-md-center gap-2 gap-md-4'>
@@ -312,14 +314,20 @@ const handleSubmit = async (e: any) => {
               {errors.agree && <small className="text-danger d-block">{errors.agree}</small>}
             </div>
           </div>
-          <div className='col-12 text-center mt-3'>
-            <button type='submit' className='btn btn-primary px-5'>Gửi đăng ký</button>
+          <div className="col-12 text-center mt-3">
+            <button
+              type="submit"
+              className="btn btn-primary px-5"
+              disabled={submitLoading}
+            >
+              {submitLoading ? "Đang gửi..." : "Gửi đăng ký"}
+            </button>
           </div>
-        </form>
+          </form>
         </div>
       </main>
     </div>
-  )
-}
+  );
+};
 
 export default RegisterKTX
