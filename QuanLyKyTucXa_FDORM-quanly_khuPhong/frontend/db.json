@@ -1,0 +1,27 @@
+{
+  "registrations": [
+    {
+      "id": "b6fa",
+      "fullName": "hanh",
+      "birthDate": "2026-01-08",
+      "gender": "Nữ",
+      "cccd": "123456789012",
+      "phone": "0334545645",
+      "email": "nguyentunglam1216@gmail.com",
+      "address": "dfsfds",
+      "school": "sdfsdf",
+      "major": "sdfsdf",
+      "studentId": "sdfsdgsg",
+      "area": "B",
+      "roomType": "6",
+      "services": [
+        "Điều hòa",
+        "Máy giặt"
+      ],
+      "emergencyName": "dfsds",
+      "emergencyPhone": "02342342342",
+      "agree": true,
+      "avatar": "blob:http://localhost:5173/2aa12610-f346-41ef-a709-79136ff76bf7"
+    }
+  ]
+}
