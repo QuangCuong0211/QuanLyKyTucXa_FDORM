@@ -1,15 +1,17 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
 import './App.css'
 import { useRoutes } from 'react-router-dom'
 import ClientLayout from './layout/ClientLayout'
-import RegisterKTX from './page/RegisterKTX'
+import RegisterKTX from './page/student/RegisterKTX'
+import LayoutAdmin from './layout/admin/LayoutAdmin'
+import HomeAdmin from './page/admin/HomeAdmin'
 
 function App() {
   const router = useRoutes([
     {path:'/',Component:ClientLayout,children:[
       {path:'/student/register',Component:RegisterKTX}
+    ]},
+    {path:'/admin',Component:LayoutAdmin,children:[
+      {path:'',Component:HomeAdmin}
     ]}
   ])
   return router

@@ -138,25 +138,15 @@ const handleSubmit = async (e: any) => {
 
   if (!validateForm()) return;
 
-  const formDataToSend = new FormData();
-
-  Object.keys(formData).forEach((key) => {
-    const value = (formData as any)[key];
-
-    if (Array.isArray(value)) {
-      formDataToSend.append(key, JSON.stringify(value));
-    } else {
-      formDataToSend.append(key, value);
-    }
-  });
-
-  if (imageFile) {
-    formDataToSend.append("avatar", imageFile);
-  }
+  const dataToSend = {
+    ...formData,
+    avatar: preview, 
+  };
 
   try {
-    const res = await axios.post("http://localhost:3000/registrations",formDataToSend,
-      {headers: {"Content-Type": "multipart/form-data",},}
+    const res = await axios.post(
+      "http://localhost:3000/registrations",
+      dataToSend
     );
 
     console.log("Response:", res.data);
@@ -166,6 +156,41 @@ const handleSubmit = async (e: any) => {
     alert("Gửi dữ liệu thất bại!");
   }
 };
+
+
+// const handleSubmit = async (e: any) => {
+//   e.preventDefault();
+
+//   if (!validateForm()) return;
+
+//   const formDataToSend = new FormData();
+
+//   Object.keys(formData).forEach((key) => {
+//     const value = (formData as any)[key];
+
+//     if (Array.isArray(value)) {
+//       formDataToSend.append(key, JSON.stringify(value));
+//     } else {
+//       formDataToSend.append(key, value);
+//     }
+//   });
+
+//   if (imageFile) {
+//     formDataToSend.append("avatar", imageFile);
+//   }
+
+//   try {
+//     const res = await axios.post("http://localhost:3000/registrations",formDataToSend,
+//       {headers: {"Content-Type": "multipart/form-data",},}
+//     );
+
+//     console.log("Response:", res.data);
+//     alert("Đăng ký thành công!");
+//   } catch (error) {
+//     console.error("Lỗi:", error);
+//     alert("Gửi dữ liệu thất bại!");
+//   }
+// };
 
 
 

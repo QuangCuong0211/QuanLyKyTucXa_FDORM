@@ -11,7 +11,7 @@ import {
   UnorderedListOutlined,
   WarningOutlined,
 } from "@ant-design/icons";
-import { Button, Layout, Menu, MenuProps } from "antd";
+import { Button, Layout, Menu, type MenuProps } from "antd";
 import { NavLink, Outlet, useNavigate } from "react-router-dom";
 import { BellOutlined, SettingOutlined, UserOutlined } from "@ant-design/icons";
 import { Avatar, Badge, Dropdown, Space } from "antd";
@@ -268,7 +268,7 @@ const LayoutAdmin: React.FC = () => {
             fontSize: 16,
           }}
         >
-          KÝ TÚC XÁ
+          FDORM
         </div>
 
         <Menu theme="dark" mode="inline" items={items} />
