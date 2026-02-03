@@ -3,17 +3,40 @@ import { rooms } from "../data/rooms.js";
 
 const router = express.Router();
 
+/* GET all rooms */
 router.get("/", (req, res) => {
   res.json(rooms);
 });
 
+/* CREATE room */
 router.post("/", (req, res) => {
   const newRoom = {
     id: Date.now(),
-    ...req.body,
+    occupied: 0,
+    ...req.body
   };
   rooms.push(newRoom);
-  res.json(newRoom);
+  res.status(201).json(newRoom);
+});
+
+/* UPDATE room */
+router.put("/:id", (req, res) => {
+  const id = Number(req.params.id);
+  const index = rooms.findIndex(r => r.id === id);
+  if (index === -1) return res.status(404).json({ message: "Not found" });
+
+  rooms[index] = { ...rooms[index], ...req.body };
+  res.json(rooms[index]);
+});
+
+/* DELETE room */
+router.delete("/:id", (req, res) => {
+  const id = Number(req.params.id);
+  const index = rooms.findIndex(r => r.id === id);
+  if (index === -1) return res.status(404).json({ message: "Not found" });
+
+  rooms.splice(index, 1);
+  res.json({ success: true });
 });
 
 export default router;

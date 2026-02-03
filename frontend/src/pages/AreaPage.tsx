@@ -1,14 +1,18 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { getAreas, createArea } from "../services/area.service";
 import type { Area } from "../types/area";
 
 const AreaPage = () => {
-  const [areas, setAreas] = useState<Area[]>(getAreas());
+  const [areas, setAreas] = useState<Area[]>([]);
   const [name, setName] = useState("");
 
-  const handleAdd = () => {
+  useEffect(() => {
+    getAreas().then(setAreas);
+  }, []);
+
+  const handleAdd = async () => {
     if (!name.trim()) return alert("Nhập tên khu");
-    const newArea = createArea({ name });
+    const newArea = await createArea(name);
     setAreas([...areas, newArea]);
     setName("");
   };
@@ -17,20 +21,16 @@ const AreaPage = () => {
     <div className="container mt-4">
       <h3>Quản lý khu</h3>
 
-      <div className="row g-2 mb-3">
-        <div className="col">
-          <input
-            className="form-control"
-            placeholder="Tên khu"
-            value={name}
-            onChange={(e) => setName(e.target.value)}
-          />
-        </div>
-        <div className="col-auto">
-          <button className="btn btn-primary" onClick={handleAdd}>
-            Thêm
-          </button>
-        </div>
+      <div className="d-flex gap-2 mb-3">
+        <input
+          className="form-control"
+          placeholder="Tên khu"
+          value={name}
+          onChange={(e) => setName(e.target.value)}
+        />
+        <button className="btn btn-primary" onClick={handleAdd}>
+          Thêm
+        </button>
       </div>
 
       <ul className="list-group">

@@ -4,4 +4,5 @@ export interface Room {
   areaId: number;
   capacity: number;
   occupied: number;
+  price: number;
 }

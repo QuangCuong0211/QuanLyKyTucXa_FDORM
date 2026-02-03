@@ -1,24 +1,27 @@
-import type { Room } from "../types/room";
+import api from "./api";
 
-let rooms: Room[] = [
-  {
-    id: 1,
-    name: "P101",
-    areaId: 1,
-    capacity: 6,
-    occupied: 4,
-  },
-];
+export interface RoomPayload {
+  name: string;
+  areaId: number;
+  capacity: number;
+  price: number;
+}
 
-export const getRooms = (): Room[] => {
-  return rooms;
+export const getRooms = async () => {
+  const res = await api.get("/rooms");
+  return res.data;
 };
 
-export const addRoom = (data: Omit<Room, "id">): Room => {
-  const newRoom: Room = {
-    id: Date.now(),
-    ...data,
-  };
-  rooms.push(newRoom);
-  return newRoom;
+export const createRoom = async (data: RoomPayload) => {
+  const res = await api.post("/rooms", data);
+  return res.data;
+};
+
+export const updateRoom = async (id: number, data: Partial<RoomPayload>) => {
+  const res = await api.put(`/rooms/${id}`, data);
+  return res.data;
+};
+
+export const deleteRoom = async (id: number) => {
+  await api.delete(`/rooms/${id}`);
 };
