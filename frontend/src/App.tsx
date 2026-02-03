@@ -1,9 +1,10 @@
-import './App.css'
-import { useRoutes } from 'react-router-dom'
-import ClientLayout from './layout/ClientLayout'
-import RegisterKTX from './page/student/RegisterKTX'
-import LayoutAdmin from './layout/admin/LayoutAdmin'
-import HomeAdmin from './page/admin/HomeAdmin'
+import { Routes, Route, Navigate } from "react-router-dom";
+import Navbar from "./components/Navbar";
+
+import AreaPage from "./pages/AreaPage";
+import RoomPage from "./pages/RoomPage";
+// import RoomDetailPage from "./pages/RoomDetailPage";
+import StudentPage from "./pages/StudentPage";
 
 function App() {
   const router = useRoutes([
@@ -20,4 +21,4 @@ function App() {
   return router
 }
 
-export default App
+export default App;
