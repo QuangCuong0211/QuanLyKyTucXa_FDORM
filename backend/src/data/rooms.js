@@ -1,18 +1,26 @@
-export let rooms = [
+export const rooms = [
   {
     id: 1,
-    name: "P101",
+    name: "A101",
     areaId: 1,
     capacity: 6,
-    occupied: 4,
-    price: 800000
+    occupied: 2,
+    price: 350000
   },
   {
     id: 2,
-    name: "P102",
+    name: "A102",
     areaId: 1,
     capacity: 6,
-    occupied: 6,
-    price: 800000
+    occupied: 0,
+    price: 350000
+  },
+  {
+    id: 3,
+    name: "B201",
+    areaId: 2,
+    capacity: 4,
+    occupied: 1,
+    price: 300000
   }
 ];

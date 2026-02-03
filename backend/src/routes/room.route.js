@@ -3,12 +3,10 @@ import { rooms } from "../data/rooms.js";
 
 const router = express.Router();
 
-/* GET all rooms */
 router.get("/", (req, res) => {
   res.json(rooms);
 });
 
-/* CREATE room */
 router.post("/", (req, res) => {
   const newRoom = {
     id: Date.now(),
@@ -19,7 +17,6 @@ router.post("/", (req, res) => {
   res.status(201).json(newRoom);
 });
 
-/* UPDATE room */
 router.put("/:id", (req, res) => {
   const id = Number(req.params.id);
   const index = rooms.findIndex(r => r.id === id);
@@ -29,7 +26,6 @@ router.put("/:id", (req, res) => {
   res.json(rooms[index]);
 });
 
-/* DELETE room */
 router.delete("/:id", (req, res) => {
   const id = Number(req.params.id);
   const index = rooms.findIndex(r => r.id === id);

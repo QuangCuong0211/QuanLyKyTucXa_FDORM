@@ -1,14 +1,12 @@
-export let areas = [
+export const areas = [
   {
     id: 1,
     name: "Khu A",
-    gender: "NAM",
-    totalRooms: 10
+    description: "Khu nam – 5 tầng"
   },
   {
     id: 2,
     name: "Khu B",
-    gender: "NU",
-    totalRooms: 8
+    description: "Khu nữ – 4 tầng"
   }
 ];
