@@ -1,54 +1,26 @@
 {
   "registrations": [
     {
-      "id": "a358",
-      "fullName": "nhât",
-      "birthDate": "2026-01-16",
+      "id": "3287",
+      "fullName": "lam",
+      "birthDate": "2026-01-01",
       "gender": "Nam",
-      "cccd": "022202002670",
-      "phone": "0392369143",
-      "email": "nguyenbachnhat@gmail.com",
-      "address": "hà Nội",
-      "school": "Cao đăng fpt",
-      "major": "Lập trình web",
-      "studentId": "ph61571",
-      "area": "B",
+      "cccd": "123456789012",
+      "phone": "0546456322",
+      "email": "nguyentunglam1216@gmail.com",
+      "address": "BG",
+      "school": "Fpoly",
+      "major": "Cntt",
+      "studentId": "ph63450",
+      "area": "A",
       "roomType": "6",
       "services": [
         "Điều hòa"
       ],
-      "emergencyName": "Linh",
-      "emergencyPhone": "0935958421",
+      "emergencyName": "Nguyễn Thị S",
+      "emergencyPhone": "0123434556",
       "agree": true,
-      "avatar": "blob:http://localhost:5173/ce77e2a7-6898-4767-a803-548394c54348",
-      "status": "pending"
-    }
-  ],
-  "residents": [
-    {
-      "id": "b6fa",
-      "fullName": "hanh",
-      "birthDate": "2026-01-08",
-      "gender": "Nữ",
-      "cccd": "123456789012",
-      "phone": "0334545645",
-      "email": "nguyentunglam1216@gmail.com",
-      "address": "dfsfds",
-      "school": "sdfsdf",
-      "major": "sdfsdf",
-      "studentId": "sdfsdgsg",
-      "area": "B",
-      "roomType": "6",
-      "services": [
-        "Điều hòa",
-        "Máy giặt"
-      ],
-      "emergencyName": "dfsds",
-      "emergencyPhone": "02342342342",
-      "agree": true,
-      "avatar": "blob:http://localhost:5173/2aa12610-f346-41ef-a709-79136ff76bf7",
-      "status": "approved",
-      "approvedAt": "2026-01-30T10:56:21.986Z"
+      "avatar": "blob:http://localhost:5173/9c8401d0-41da-422c-acc6-b53b82774462"
     }
   ]
 }
