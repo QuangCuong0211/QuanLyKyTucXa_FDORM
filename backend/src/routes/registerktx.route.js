@@ -6,7 +6,6 @@ import {
   getRegisterKTX,
   getRegisterKTXById,
   addRegisterKTX,
-  deleteRegisterKTX,
 } from "../controllers/registerktx.controller.js";
 
 const router = Router();
