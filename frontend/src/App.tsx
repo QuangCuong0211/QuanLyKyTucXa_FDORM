@@ -1,20 +1,26 @@
-import './App.css'
-import { useRoutes } from 'react-router-dom'
-import ClientLayout from './layout/ClientLayout'
-import RegisterKTX from './page/student/RegisterKTX'
-import LayoutAdmin from './layout/admin/LayoutAdmin'
-import HomeAdmin from './page/admin/HomeAdmin'
+import { Routes, Route, Navigate } from "react-router-dom";
+import Navbar from "./components/Navbar";
+
+import AreaPage from "./pages/AreaPage";
+import RoomPage from "./pages/RoomPage";
+// import RoomDetailPage from "./pages/RoomDetailPage";
+import StudentPage from "./pages/StudentPage";
 
 function App() {
-  const router = useRoutes([
-    {path:'/',Component:ClientLayout,children:[
-      {path:'/student/register',Component:RegisterKTX}
-    ]},
-    {path:'/admin',Component:LayoutAdmin,children:[
-      {path:'',Component:HomeAdmin}
-    ]}
-  ])
-  return router
+  return (
+    <>
+      <Navbar />
+
+      <Routes>
+        <Route path="/" element={<Navigate to="/areas" />} />
+
+        <Route path="/areas" element={<AreaPage />} />
+        <Route path="/rooms" element={<RoomPage />} />
+        {/* <Route path="/rooms/:id" element={<RoomDetailPage />} /> */}
+        <Route path="/students" element={<StudentPage />} />
+      </Routes>
+    </>
+  );
 }
 
-export default App
+export default App;
