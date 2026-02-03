@@ -1,54 +1,45 @@
 import { useState } from "react";
+import { getAreas, createArea } from "../services/area.service";
 import type { Area } from "../types/area";
-import { getAreas, addArea } from "../services/areaService";
 
 const AreaPage = () => {
   const [areas, setAreas] = useState<Area[]>(getAreas());
   const [name, setName] = useState("");
-  const [desc, setDesc] = useState("");
 
   const handleAdd = () => {
-    if (!name) return;
-    const newArea = addArea({ name, description: desc });
+    if (!name.trim()) return alert("Nhập tên khu");
+    const newArea = createArea({ name });
     setAreas([...areas, newArea]);
     setName("");
-    setDesc("");
   };
 
   return (
-    <div style={{ padding: 20 }}>
-      <h2>Quản lý khu ký túc xá</h2>
+    <div className="container mt-4">
+      <h3>Quản lý khu</h3>
 
-      <input
-        placeholder="Tên khu"
-        value={name}
-        onChange={(e) => setName(e.target.value)}
-      />
-      <input
-        placeholder="Mô tả"
-        value={desc}
-        onChange={(e) => setDesc(e.target.value)}
-      />
-      <button onClick={handleAdd}>Thêm khu</button>
+      <div className="row g-2 mb-3">
+        <div className="col">
+          <input
+            className="form-control"
+            placeholder="Tên khu"
+            value={name}
+            onChange={(e) => setName(e.target.value)}
+          />
+        </div>
+        <div className="col-auto">
+          <button className="btn btn-primary" onClick={handleAdd}>
+            Thêm
+          </button>
+        </div>
+      </div>
 
-      <table border={1} cellPadding={8}>
-        <thead>
-          <tr>
-            <th>ID</th>
-            <th>Tên khu</th>
-            <th>Mô tả</th>
-          </tr>
-        </thead>
-        <tbody>
-          {areas.map((a) => (
-            <tr key={a.id}>
-              <td>{a.id}</td>
-              <td>{a.name}</td>
-              <td>{a.description}</td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
+      <ul className="list-group">
+        {areas.map((a) => (
+          <li key={a.id} className="list-group-item">
+            {a.name}
+          </li>
+        ))}
+      </ul>
     </div>
   );
 };

@@ -1,16 +1,13 @@
 import { Link } from "react-router-dom";
 
-const Navbar = () => {
+export default function Navbar() {
   return (
-    <nav style={{ padding: 10, borderBottom: "1px solid #ccc" }}>
-      <Link to="/areas" style={{ marginRight: 10 }}>
-        Quản lý khu
-      </Link>
-      <Link to="/rooms">
-        Quản lý phòng
-      </Link>
+    <nav className="navbar navbar-expand navbar-dark bg-dark px-3">
+      <span className="navbar-brand">QL KTX</span>
+      <div className="navbar-nav">
+        <Link className="nav-link" to="/areas">Khu</Link>
+        <Link className="nav-link" to="/rooms">Phòng</Link>
+      </div>
     </nav>
   );
-};
-
-export default Navbar;
+}
