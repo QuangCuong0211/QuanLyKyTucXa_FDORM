@@ -7,20 +7,18 @@ import RoomPage from "./pages/RoomPage";
 import StudentPage from "./pages/StudentPage";
 
 function App() {
-  return (
-    <>
-      <Navbar />
+  const router = useRoutes([
+    {path:'/',Component:ClientLayout,children:[
+      {path:'/student/register',Component:RegisterKTX},
+      {path:'/student/home',Component:HomeAdmin},
 
-      <Routes>
-        <Route path="/" element={<Navigate to="/areas" />} />
 
-        <Route path="/areas" element={<AreaPage />} />
-        <Route path="/rooms" element={<RoomPage />} />
-        {/* <Route path="/rooms/:id" element={<RoomDetailPage />} /> */}
-        <Route path="/students" element={<StudentPage />} />
-      </Routes>
-    </>
-  );
+    ]},
+    {path:'/admin',Component:LayoutAdmin,children:[
+      {path:'',Component:HomeAdmin}
+    ]}
+  ])
+  return router
 }
 
 export default App;
