@@ -8,7 +8,10 @@ import HomeAdmin from './page/admin/HomeAdmin'
 function App() {
   const router = useRoutes([
     {path:'/',Component:ClientLayout,children:[
-      {path:'/student/register',Component:RegisterKTX}
+      {path:'/student/register',Component:RegisterKTX},
+      {path:'/student/home',Component:HomeAdmin},
+
+
     ]},
     {path:'/admin',Component:LayoutAdmin,children:[
       {path:'',Component:HomeAdmin}

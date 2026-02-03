@@ -96,7 +96,7 @@ const onFinish = async (values: any) => {
                     name="fullName"
                     label="Họ và Tên"
                     style={{ marginBottom: 8 }}
-                    rules={[{ required: true }]}
+                    rules={[{ required: true , message: "Vui lòng nhập họ và tên" }]}
                   >
                     <Input placeholder="Nhập họ và tên" />
                   </Form.Item>
@@ -107,7 +107,22 @@ const onFinish = async (values: any) => {
                     name="birthDate"
                     label="Ngày sinh"
                     style={{ marginBottom: 8 }}
-                    rules={[{ required: true }]}
+                    rules={[{ required: true, message: "Vui lòng chọn ngày sinh" },
+                    {
+                      validator: (_, value) => {
+                        if (!value) return Promise.resolve();
+                        const today = new Date();
+                        const birth = new Date(value);
+                        const age = today.getFullYear() - birth.getFullYear();
+                        if (age < 16) {
+                          return Promise.reject("Phải đủ 16 tuổi");
+                        }
+                        if (birth > today) {
+                          return Promise.reject("Ngày sinh không hợp lệ");
+                        }
+                        return Promise.resolve();
+                      },
+                    },]}
                   >
                     <DatePicker style={{ width: "100%" }} placeholder="Chọn ngày sinh" />
                   </Form.Item>
@@ -118,7 +133,7 @@ const onFinish = async (values: any) => {
                     name="gender"
                     label="Giới tính"
                     style={{ marginBottom: 8 }}
-                    rules={[{ required: true }]}
+                    rules={[{ required: true , message: "Vui lòng chọn giới tính" }]}
                   >
                     <Radio.Group>
                       <Radio value="Nam">Nam</Radio>
@@ -133,7 +148,7 @@ const onFinish = async (values: any) => {
                     label="CCCD"
                     style={{ marginBottom: 8 }}
                     rules={[
-                      { required: true },
+                      { required: true, message: "Vui lòng nhập số căn cước công dân" },
                       { pattern: /^\d{12}$/, message: "CCCD phải 12 số" },
                     ]}
                   >
@@ -147,7 +162,7 @@ const onFinish = async (values: any) => {
                     label="Số điện thoại"
                     style={{ marginBottom: 8 }}
                     rules={[
-                      { required: true },
+                      { required: true, message: "Vui lòng nhập số điện " },
                       { pattern: /^0\d{9}$/, message: "SĐT không hợp lệ" },
                     ]}
                   >
@@ -165,7 +180,7 @@ const onFinish = async (values: any) => {
                   <Form.Item
                     name="address"
                     label="Địa chỉ thường trú"
-                    rules={[{ required: true }]}
+                    rules={[{ required: true, message: "Vui lòng nhập địa chỉ thường trú" }]}
                   >
                     <Input placeholder="Nhập địa chỉ thường trú"/>
                   </Form.Item>
@@ -179,19 +194,19 @@ const onFinish = async (values: any) => {
             </div>
 
             <div className="col-md-6">
-              <Form.Item name="school" label="Tên trường" style={{ marginBottom: 8 }} rules={[{ required: true }]}>
+              <Form.Item name="school" label="Tên trường" style={{ marginBottom: 8 }} rules={[{ required: true, message: "Vui lòng nhập tên trường" }]}>
                 <Input placeholder="Nhập tên trường"/>
               </Form.Item>
             </div>
 
             <div className="col-md-6">
-              <Form.Item name="major" label="Khoa / Ngành" style={{ marginBottom: 8 }} rules={[{ required: true }]}>
+              <Form.Item name="major" label="Khoa / Ngành" style={{ marginBottom: 8 }} rules={[{ required: true, message: "Vui lòng nhập Khoa /Ngành" }]}>
                 <Input placeholder="Nhập khoa / ngành"/>
               </Form.Item>
             </div>
 
             <div className="col-md-12">
-              <Form.Item name="studentId" label="Mã sinh viên" style={{ marginBottom: 8 }} rules={[{ required: true }]}>
+              <Form.Item name="studentId" label="Mã sinh viên" style={{ marginBottom: 8 }} rules={[{ required: true, message: "Vui lòng nhập mã sinh viên" }]}>
                 <Input placeholder="Nhập mã sinh viên"/>
               </Form.Item>
             </div>
@@ -201,7 +216,7 @@ const onFinish = async (values: any) => {
             </div>
 
             <div className="col-12">
-              <Form.Item name="area" label="Khu" style={{ marginBottom: 8 }} rules={[{ required: true }]}>
+              <Form.Item name="area" label="Khu" style={{ marginBottom: 8 }} rules={[{ required: true , message: "Vui lòng chọn khu ở" }]}>
                 <Select placeholder="-- Chọn khu --"
                   options={[
                       { value: "A", label: "Khu A" },
@@ -213,7 +228,7 @@ const onFinish = async (values: any) => {
             </div>
 
             <div className="col-12">
-              <Form.Item name="roomType" label="Loại phòng" style={{ marginBottom: 8 }} rules={[{ required: true }]}>
+              <Form.Item name="roomType" label="Loại phòng" style={{ marginBottom: 8 }} rules={[{ required: true, message: "Vui lòng chọn loại phòng" }]}>
                 <Radio.Group>
                   <Radio value="6">Phòng 6 người</Radio>
                   <Radio value="8">Phòng 8 người</Radio>
@@ -235,13 +250,13 @@ const onFinish = async (values: any) => {
             </div>
 
             <div className="col-md-6">
-              <Form.Item name="emergencyName" label="Người liên hệ" style={{ marginBottom: 8 }} rules={[{ required: true }]}>
+              <Form.Item name="emergencyName" label="Người liên hệ" style={{ marginBottom: 8 }} rules={[{ required: true , message: "Vui lòng nhập họ và tên người liên hệ" }]}>
                 <Input placeholder="Nhập tên người liên hệ"/>
               </Form.Item>
             </div>
 
             <div className="col-md-6">
-              <Form.Item name="emergencyPhone" label="SĐT người liên hệ" style={{ marginBottom: 8 }} rules={[{ required: true }]}>
+              <Form.Item name="emergencyPhone" label="SĐT người liên hệ" style={{ marginBottom: 8 }} rules={[{ required: true , message: "Vui lòng nhập số điện thoại người liên hệ" }]}>
                 <Input placeholder="Nhập số điện thoại người liên hệ"/>
               </Form.Item>
             </div>
