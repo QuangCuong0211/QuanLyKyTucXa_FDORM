@@ -15,6 +15,13 @@ app.use(express.json());
 app.use("/api/areas", areaRoutes);
 app.use("/api/rooms", roomRoutes);
 app.use("/api/students", studentRoutes);
+app.use("/uploads", express.static("uploads"));
+app.use("/registerktx", registerKTXRouter);
+
+mongoose
+  .connect("mongodb://127.0.0.1:27017/ktx")
+  .then(() => console.log("MongoDB connected"))
+  .catch((err) => console.log(err));
 
 app.use("/src/uploads", express.static("uploads"));
 app.use("/api/registerktx", registerKTX);
