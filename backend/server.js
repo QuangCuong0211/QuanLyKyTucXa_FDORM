@@ -5,6 +5,7 @@ import mongoose from "mongoose";
 import areaRoutes from "./src/routes/area.route.js";
 import roomRoutes from "./src/routes/room.route.js";
 import studentRoutes from "./src/routes/student.route.js";
+import registerKTX from "./src/routes/registerktx.route.js";
 
 const app = express();
 
@@ -15,8 +16,8 @@ app.use("/api/areas", areaRoutes);
 app.use("/api/rooms", roomRoutes);
 app.use("/api/students", studentRoutes);
 
-app.use("/uploads", express.static("uploads"));
-app.use("/registerktx", registerKTXRouter);
+app.use("/src/uploads", express.static("uploads"));
+app.use("/api/registerktx", registerKTX);
 
 mongoose
   .connect("mongodb://127.0.0.1:27017/ktx")
