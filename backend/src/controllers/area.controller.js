@@ -1,4 +1,4 @@
-const areas = require("../src/data/areas");
+const areas = require("../data/areas");
 
 exports.getAllAreas = (req, res) => {
   res.json(areas);
@@ -7,7 +7,7 @@ exports.getAllAreas = (req, res) => {
 exports.createArea = (req, res) => {
   const newArea = {
     id: Date.now(),
-    ...req.body
+    ...req.body,
   };
   areas.push(newArea);
   res.status(201).json(newArea);
