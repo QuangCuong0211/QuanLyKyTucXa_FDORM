@@ -140,7 +140,7 @@ export default function RoomPage() {
             <th>Sức chứa</th>
             <th>Giá</th>
             <th>Trạng thái</th>
-            <th width="150">Thao tác</th>
+            <th>Thao tác</th>
           </tr>
         </thead>
         <tbody>

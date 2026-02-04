@@ -42,7 +42,7 @@ const onFinish = async (values: any) => {
     if (imageFile) {
       formData.append("avatar", imageFile);
     }
-    await axios.post("http://localhost:3000/registerktx", formData);
+    await axios.post("http://localhost:3000/registrations", formData);
     message.success("Đăng ký thành công!");
     form.resetFields();
     setPreview(defaultAvatar);
