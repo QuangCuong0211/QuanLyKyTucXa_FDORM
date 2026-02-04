@@ -21,35 +21,33 @@ const RegisterKTX = () => {
 
 const onFinish = async (values: any) => {
   try {
+    const { agree, ...data } = values;
     if (!imageFile) {
       message.error("Chưa chọn ảnh");
       return;
     }
     const formData = new FormData();
-    Object.keys(values).forEach((key) => {
+    Object.keys(data).forEach((key) => {
       if (key === "birthDate") {
-        formData.append(key, values.birthDate?.format("YYYY-MM-DD"));
-      }
-      else if (key === "services") {
-        values.services?.forEach((service: string) => {
+        formData.append(key, data.birthDate?.format("YYYY-MM-DD"));
+      } else if (key === "services") {
+        data.services?.forEach((service: string) => {
           formData.append("services", service);
         });
-      }
-      else {
-        formData.append(key, values[key]);
+      } else {
+        formData.append(key, data[key]);
       }
     });
-    if (imageFile) {
-      formData.append("avatar", imageFile);
-    }
-    await axios.post("http://localhost:3000/registerktx", formData);
+    formData.append("avatar", imageFile);
+    await axios.post("http://localhost:3000/api/registerktx", formData);
     message.success("Đăng ký thành công!");
     form.resetFields();
     setPreview(defaultAvatar);
-  } catch {
+  } catch (err) {
     message.error("Gửi dữ liệu thất bại!");
   }
 };
+
 
 
   return (

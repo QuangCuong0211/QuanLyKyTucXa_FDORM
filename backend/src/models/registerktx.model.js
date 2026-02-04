@@ -26,8 +26,6 @@ const registerKTXSchema = new mongoose.Schema(
     emergencyName: String,
     emergencyPhone: String,
 
-    agree: Boolean,
-
     avatar: String,
   },
   { timestamps: true },

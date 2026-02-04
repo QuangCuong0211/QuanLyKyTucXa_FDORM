@@ -12,22 +12,6 @@ export async function getRegisterKTX(req, res) {
   }
 }
 
-export async function getRegisterKTXById(req, res) {
-  try {
-    const data = await RegisterKTX.findById(req.params.id);
-
-    if (!data) {
-      return res.status(404).json({ message: "Không tìm thấy hồ sơ" });
-    }
-
-    return res.json({
-      data,
-    });
-  } catch (error) {
-    return res.status(400).json({ message: error.message });
-  }
-}
-
 export async function addRegisterKTX(req, res) {
   try {
     const body = {

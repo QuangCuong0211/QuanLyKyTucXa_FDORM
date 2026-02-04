@@ -4,7 +4,6 @@ import path from "path";
 
 import {
   getRegisterKTX,
-  getRegisterKTXById,
   addRegisterKTX,
 } from "../controllers/registerktx.controller.js";
 
@@ -23,8 +22,6 @@ const storage = multer.diskStorage({
 const upload = multer({ storage });
 
 router.get("/", getRegisterKTX);
-
-router.get("/:id", getRegisterKTXById);
 
 router.post("/", upload.single("avatar"), addRegisterKTX);
 
