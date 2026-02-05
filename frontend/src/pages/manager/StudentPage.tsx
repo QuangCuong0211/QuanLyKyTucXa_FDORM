@@ -1,13 +1,20 @@
 import { useEffect, useState } from "react";
-import { getStudents, createStudent, deleteStudent } from "../../services/student.service";
 import { getRooms } from "../../services/room.service";
+import {
+  createStudent,
+  deleteStudent,
+  getStudents,
+} from "../../services/student.service";
+import type { Room } from "../../types/room";
+import type { Student } from "../../types/students";
 
 export default function StudentPage() {
-  const [students, setStudents] = useState<any[]>([]);
-  const [rooms, setRooms] = useState<any[]>([]);
+  const [students, setStudents] = useState<Student[]>([]);
+  const [rooms, setRooms] = useState<Room[]>([]);
+
   const [name, setName] = useState("");
-  const [code, setCode] = useState("");
-  const [gender, setGender] = useState("NAM");
+  const [mssv, setMssv] = useState("");
+  const [gender, setGender] = useState<"NAM" | "NU">("NAM");
   const [roomId, setRoomId] = useState("");
 
   const fetchData = async () => {
@@ -20,52 +27,100 @@ export default function StudentPage() {
   }, []);
 
   const handleAdd = async () => {
-    await createStudent({ name, code, gender, roomId });
+    if (!name || !mssv || !roomId) {
+      alert("Vui lòng nhập đầy đủ thông tin");
+      return;
+    }
+
+    const room = rooms.find((r) => r._id === roomId);
+    if (!room || room.remaining === 0) {
+      alert("Phòng đã đầy");
+      return;
+    }
+
+    await createStudent({ name, mssv, gender, roomId });
+    alert("Thêm sinh viên thành công");
+
+    setName("");
+    setMssv("");
+    setRoomId("");
     fetchData();
   };
 
   return (
     <div className="p-4">
-      <h3>Quản lý sinh viên</h3>
+      <h3 className="mb-3">Quản lý sinh viên</h3>
 
-      <div className="d-flex gap-2 mb-3">
-        <input className="form-control" placeholder="Mã SV" onChange={(e) => setCode(e.target.value)} />
-        <input className="form-control" placeholder="Tên SV" onChange={(e) => setName(e.target.value)} />
+      {/* FORM */}
+      <div className="row g-2 mb-4">
+        <div className="col-md-3">
+          <input
+            className="form-control"
+            placeholder="Tên sinh viên"
+            value={name}
+            onChange={(e) => setName(e.target.value)}
+          />
+        </div>
 
-        <select className="form-select" onChange={(e) => setGender(e.target.value)}>
-          <option value="NAM">Nam</option>
-          <option value="NU">Nữ</option>
-        </select>
+        <div className="col-md-2">
+          <input
+            className="form-control"
+            placeholder="MSSV"
+            value={mssv}
+            onChange={(e) => setMssv(e.target.value)}
+          />
+        </div>
 
-        <select className="form-select" onChange={(e) => setRoomId(e.target.value)}>
-          <option value="">Chọn phòng</option>
-          {rooms.map((r) => (
-            <option key={r._id} value={r._id}>
-              {r.name}
-            </option>
-          ))}
-        </select>
+        <div className="col-md-2">
+          <select
+            className="form-select"
+            value={gender}
+            onChange={(e) => setGender(e.target.value as "NAM" | "NU")}
+          >
+            <option value="NAM">Nam</option>
+            <option value="NU">Nữ</option>
+          </select>
+        </div>
 
-        <button className="btn btn-primary" onClick={handleAdd}>
-          Thêm
-        </button>
+        <div className="col-md-3">
+          <select
+            className="form-select"
+            value={roomId}
+            onChange={(e) => setRoomId(e.target.value)}
+          >
+            <option value="">-- Chọn phòng --</option>
+            {rooms.map((r) => (
+              <option key={r._id} value={r._id} disabled={r.remaining === 0}>
+                {r.name} ({r.remaining}/{r.capacity}){" "}
+                {r.remaining === 0 ? "- Đã đầy" : ""}
+              </option>
+            ))}
+          </select>
+        </div>
+
+        <div className="col-md-2">
+          <button className="btn btn-primary w-100" onClick={handleAdd}>
+            Thêm
+          </button>
+        </div>
       </div>
 
-      <table className="table table-bordered">
+      {/* TABLE */}
+      <table className="table table-bordered table-hover">
         <thead>
           <tr>
-            <th>Mã SV</th>
             <th>Tên</th>
+            <th>MSSV</th>
             <th>Giới tính</th>
             <th>Phòng</th>
-            <th></th>
+            <th width="100">Action</th>
           </tr>
         </thead>
         <tbody>
           {students.map((s) => (
             <tr key={s._id}>
-              <td>{s.code}</td>
               <td>{s.name}</td>
+              <td>{s.mssv}</td>
               <td>{s.gender}</td>
               <td>{s.roomId?.name}</td>
               <td>

@@ -1,105 +1,124 @@
 import { useEffect, useState } from "react";
-import { getRooms, createRoom, deleteRoom } from "../../services/room.service";
-import { getAreas } from "../../services/area.service";
+import { createRoom, deleteRoom, getRooms } from "../../services/room.service";
 import type { Room } from "../../types/room";
-import type { Area } from "../../types/area";
 
 export default function RoomPage() {
   const [rooms, setRooms] = useState<Room[]>([]);
-  const [areas, setAreas] = useState<Area[]>([]);
-
   const [name, setName] = useState("");
-  const [capacity, setCapacity] = useState(0);
   const [areaId, setAreaId] = useState("");
+  const [capacity, setCapacity] = useState<6 | 8>(6);
 
-  const fetchData = async () => {
-    const [roomData, areaData] = await Promise.all([
-      getRooms(),
-      getAreas(),
-    ]);
-    setRooms(roomData);
-    setAreas(areaData);
+  const fetchRooms = async () => {
+    const data = await getRooms();
+    setRooms(data);
   };
 
   useEffect(() => {
-    fetchData();
+    fetchRooms();
   }, []);
 
   const handleAdd = async () => {
     if (!name || !areaId) {
-      alert("Nhập tên phòng và chọn khu");
+      alert("Thiếu dữ liệu");
       return;
     }
 
-    await createRoom({ name, capacity, areaId });
+    await createRoom({ name, areaId, capacity });
     setName("");
-    setCapacity(0);
-    setAreaId("");
-    fetchData();
-  };
-
-  const handleDelete = async (id: string) => {
-    await deleteRoom(id);
-    fetchData();
+    setCapacity(6);
+    fetchRooms();
+    alert("Thêm phòng thành công");
   };
 
   return (
-    <div className="p-4">
-      <h3>Quản lý phòng</h3>
+    <div>
+      <h2 className="mb-3">Quản lý phòng</h2>
 
-      <div className="d-flex gap-2 mb-3">
-        <input
-          className="form-control"
-          placeholder="Tên phòng"
-          value={name}
-          onChange={(e) => setName(e.target.value)}
-        />
+      {/* FORM */}
+      <div className="row g-2 mb-3">
+        <div className="col">
+          <input
+            className="form-control"
+            placeholder="Tên phòng"
+            value={name}
+            onChange={(e) => setName(e.target.value)}
+          />
+        </div>
 
-        <input
-          type="number"
-          className="form-control"
-          placeholder="Sức chứa"
-          value={capacity}
-          onChange={(e) => setCapacity(+e.target.value)}
-        />
+        <div className="col">
+          <select
+            className="form-select"
+            value={areaId}
+            onChange={(e) => setAreaId(e.target.value)}
+          >
+            <option value="">-- Chọn khu --</option>
+            {/* TẠM hardcode – sau thay bằng area API */}
+            <option value="AREA_ID_KHU_A">Khu A</option>
+            <option value="AREA_ID_KHU_B">Khu B</option>
+          </select>
+        </div>
 
-        <select
-          className="form-select"
-          value={areaId}
-          onChange={(e) => setAreaId(e.target.value)}
-        >
-          <option value="">-- Chọn khu --</option>
-          {areas.map((a) => (
-            <option key={a._id} value={a._id}>
-              {a.name}
-            </option>
-          ))}
-        </select>
+        <div className="col">
+          <select
+            className="form-select"
+            value={capacity}
+            onChange={(e) => setCapacity(Number(e.target.value) as 6 | 8)}
+          >
+            <option value={6}>6 người</option>
+            <option value={8}>8 người</option>
+          </select>
+        </div>
 
-        <button className="btn btn-primary" onClick={handleAdd}>
-          Thêm
-        </button>
+        <div className="col-auto">
+          <button className="btn btn-primary" onClick={handleAdd}>
+            Thêm
+          </button>
+        </div>
       </div>
 
-      <table className="table table-bordered">
+      {/* TABLE */}
+      <table className="table table-bordered table-hover">
         <thead>
           <tr>
             <th>Tên phòng</th>
             <th>Khu</th>
             <th>Sức chứa</th>
+            <th>Trạng thái</th>
+            <th>Còn trống</th>
             <th>Action</th>
           </tr>
         </thead>
+
         <tbody>
+          {rooms.length === 0 && (
+            <tr>
+              <td colSpan={6} className="text-center">
+                Chưa có phòng
+              </td>
+            </tr>
+          )}
+
           {rooms.map((r) => (
             <tr key={r._id}>
               <td>{r.name}</td>
               <td>{r.areaId?.name}</td>
               <td>{r.capacity}</td>
               <td>
+                <span
+                  className={
+                    r.status === "Đã đầy"
+                      ? "badge bg-danger"
+                      : "badge bg-success"
+                  }
+                >
+                  {r.status}
+                </span>
+              </td>
+              <td>{r.remaining}</td>
+              <td>
                 <button
                   className="btn btn-danger btn-sm"
-                  onClick={() => handleDelete(r._id)}
+                  onClick={() => deleteRoom(r._id).then(fetchRooms)}
                 >
                   Xóa
                 </button>

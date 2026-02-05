@@ -8,10 +8,11 @@ export const getRooms = async (): Promise<Room[]> => {
 
 export const createRoom = async (data: {
   name: string;
-  capacity: number;
   areaId: string;
-}) => {
-  return api.post("/rooms", data);
+  capacity: 6 | 8;
+}): Promise<Room> => {
+  const res = await api.post("/rooms", data);
+  return res.data;
 };
 
 export const deleteRoom = async (id: string) => {

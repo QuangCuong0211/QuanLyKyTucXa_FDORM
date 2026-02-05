@@ -1,4 +1,4 @@
-import Area from "../models/area.js";
+import Area from "../models/area.model.js";
 
 // GET ALL
 export const getAreas = async (req, res) => {
