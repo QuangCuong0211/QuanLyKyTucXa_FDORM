@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
-import { getStudents, createStudent, deleteStudent } from "../services/student.service";
-import { getRooms } from "../services/room.service";
+import { getStudents, createStudent, deleteStudent } from "../../services/student.service";
+import { getRooms } from "../../services/room.service";
 
 export default function StudentPage() {
   const [students, setStudents] = useState<any[]>([]);

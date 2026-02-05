@@ -1,7 +1,7 @@
 import { Routes, Route } from "react-router-dom";
 import HomePage from "../pages/HomePage";
-import AreaPage from "../pages/AreaPage";
-import RoomPage from "../pages/RoomPage";
+import AreaPage from "../pages/manager/AreaPage";
+import RoomPage from "../pages/manager/RoomPage";
 
 export default function AppRouter() {
   return (

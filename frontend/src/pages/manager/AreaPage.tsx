@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
-import { getAreas, createArea } from "../services/area.service";
-import type { Area } from "../types/area";
+import { getAreas, createArea } from "../../services/area.service";
+import type { Area } from "../../types/area";
 
 const AreaPage = () => {
   const [areas, setAreas] = useState<Area[]>([]);

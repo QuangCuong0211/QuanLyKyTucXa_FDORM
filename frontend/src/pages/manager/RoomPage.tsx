@@ -4,8 +4,8 @@ import {
   createRoom,
   updateRoom,
   deleteRoom
-} from "../services/room.service";
-import { getAreas } from "../services/area.service";
+} from "../../services/room.service";
+import { getAreas } from "../../services/area.service";
 
 interface Room {
   id: number;
