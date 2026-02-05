@@ -5,6 +5,8 @@ import path from "path";
 import {
   getRegisterKTX,
   addRegisterKTX,
+  deleteRegisterKTX,
+  updateRegisterKTX,
 } from "../controllers/registerktx.controller.js";
 
 const router = Router();
@@ -24,5 +26,11 @@ const upload = multer({ storage });
 router.get("/", getRegisterKTX);
 
 router.post("/", upload.single("avatar"), addRegisterKTX);
+
+router.delete("/:id", deleteRegisterKTX);
+
+router.patch("/:id", updateRegisterKTX);
+
+
 
 export default router;

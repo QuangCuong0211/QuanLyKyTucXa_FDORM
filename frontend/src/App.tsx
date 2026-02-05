@@ -7,14 +7,17 @@ import RoomPage from "./pages/manager/RoomPage";
 import ManegerLayout from "./layouts/ManegerLayout/ManegerLayout";
 import AreaPage from "./pages/manager/AreaPage";
 import StudentPage from "./pages/manager/StudentPage";
+import ApproveRegistration from "./layouts/admin/ApproveRegistration";
+import RegistrationPeriod from "./layouts/admin/RegistrationPeriod";
 
 function App() {
   return useRoutes([
     { path: "/", Component: ClientLayout, children: [
       { path: "student/register", Component: RegisterKTX }
     ] },
-    { path: "/admin", Component: LayoutAdmin, children: [{ 
-      index: true, Component: HomeAdmin }
+    { path: "/admin", Component: LayoutAdmin, children: [
+      { path: "dangkyKTX", Component: ApproveRegistration },
+      { path: "dangkyKTX/Doi", Component: RegistrationPeriod }
     ] },
     { path: "/manager", Component: ManegerLayout, children: [
         { path: "areas", Component: AreaPage },

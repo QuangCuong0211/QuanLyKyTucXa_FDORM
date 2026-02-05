@@ -27,6 +27,15 @@ const registerKTXSchema = new mongoose.Schema(
     emergencyPhone: String,
 
     avatar: String,
+    status: {
+      type: String,
+      enum: ["pending", "approved", "rejected"],  // chỉ cho phép 3 giá trị này
+      default: "pending",                         // mặc định khi tạo mới
+    },
+    approvedAt: {
+      type: Date,
+      default: null,
+    },
   },
   { timestamps: true },
 );
