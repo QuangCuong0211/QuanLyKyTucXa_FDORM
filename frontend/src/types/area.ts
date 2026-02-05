@@ -1,5 +1,5 @@
 export interface Area {
-  id: number;
+  _id: string;
   name: string;
   gender: "NAM" | "NU";
   totalRooms: number;

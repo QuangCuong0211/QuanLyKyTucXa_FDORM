@@ -1,6 +1,10 @@
 export interface Student {
-  id: number;
+  _id: string;
+  code: string;
   name: string;
-  mssv: string;
-  roomId: number;
+  gender: "NAM" | "NU";
+  roomId?: {
+    _id: string;
+    name: string;
+  };
 }

@@ -1,23 +1,14 @@
-import type { Student } from "../types/students";
+import api from "./api";
 
-const API = "http://localhost:3000/api/students";
-
-export const getStudents = async (): Promise<Student[]> => {
-  const res = await fetch(API);
-  return res.json();
+export const getStudents = async () => {
+  const res = await api.get("/students");
+  return res.data;
 };
 
-export const createStudent = async (data: Omit<Student, "id">) => {
-  const res = await fetch(API, {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify(data)
-  });
-
-  if (!res.ok) throw new Error("Phòng đã đầy");
-  return res.json();
+export const createStudent = async (data: any) => {
+  return api.post("/students", data);
 };
 
-export const deleteStudent = async (id: number) => {
-  await fetch(`${API}/${id}`, { method: "DELETE" });
+export const deleteStudent = async (id: string) => {
+  return api.delete(`/students/${id}`);
 };

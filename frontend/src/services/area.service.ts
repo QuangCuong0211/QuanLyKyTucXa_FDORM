@@ -6,11 +6,13 @@ export const getAreas = async (): Promise<Area[]> => {
   return res.data;
 };
 
-export const createArea = async (data: Omit<Area, "id">): Promise<Area> => {
+export const createArea = async (
+  data: Omit<Area, "_id">
+): Promise<Area> => {
   const res = await api.post("/areas", data);
   return res.data;
 };
 
-export const deleteArea = async (id: number) => {
+export const deleteArea = async (id: string) => {
   return api.delete(`/areas/${id}`);
 };

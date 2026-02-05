@@ -1,8 +1,9 @@
 export interface Room {
-  id: number;
+  _id: string;
   name: string;
-  areaId: number;
   capacity: number;
-  occupied: number;
-  price: number;
+  areaId: {
+    _id: string;
+    name: string;
+  };
 }
