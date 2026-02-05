@@ -1,20 +1,28 @@
 import { useEffect, useState } from "react";
 import { createRoom, deleteRoom, getRooms } from "../../services/room.service";
 import type { Room } from "../../types/room";
+import { getAreas } from "../../services/area.service";
+import type { Area } from "../../types/area";
 
 export default function RoomPage() {
   const [rooms, setRooms] = useState<Room[]>([]);
   const [name, setName] = useState("");
   const [areaId, setAreaId] = useState("");
   const [capacity, setCapacity] = useState<6 | 8>(6);
+  const [areas, setAreas] = useState<Area[]>([]);
 
   const fetchRooms = async () => {
     const data = await getRooms();
     setRooms(data);
   };
+  const fetchAreas = async () => {
+  const data = await getAreas();
+  setAreas(data);
+};
 
   useEffect(() => {
     fetchRooms();
+    fetchAreas()
   }, []);
 
   const handleAdd = async () => {
@@ -52,9 +60,11 @@ export default function RoomPage() {
             onChange={(e) => setAreaId(e.target.value)}
           >
             <option value="">-- Chọn khu --</option>
-            {/* TẠM hardcode – sau thay bằng area API */}
-            <option value="AREA_ID_KHU_A">Khu A</option>
-            <option value="AREA_ID_KHU_B">Khu B</option>
+            {areas.map((area) => (
+              <option key={area._id} value={area._id}>
+                {area.name} ({area.gender === "NAM" ? "Nam" : "Nữ"})
+              </option>
+            ))}
           </select>
         </div>
 
