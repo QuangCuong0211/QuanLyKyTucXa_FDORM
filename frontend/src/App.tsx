@@ -16,8 +16,8 @@ function App() {
       { path: "student/register", Component: RegisterKTX }
     ] },
     { path: "/admin", Component: LayoutAdmin, children: [
-      { path: "dangkyKTX", Component: ApproveRegistration },
-      { path: "dangkyKTX/Doi", Component: RegistrationPeriod }
+      { path: "dang-ki-ktx/duyet-don-ktx", Component: ApproveRegistration },
+      { path: "dang-ki-ktx/dot-dki-ktx", Component: RegistrationPeriod }
     ] },
     { path: "/manager", Component: ManegerLayout, children: [
         { path: "areas", Component: AreaPage },
